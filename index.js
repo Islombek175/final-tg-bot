@@ -1,3 +1,15 @@
-import "./src/bot/bot.js";
+import { config } from 'dotenv'
+import mongoose from 'mongoose'
+import './src/bot/bot.js'
+config()
 
-console.log('Dastur boshlanmoqda!')
+mongoose
+	.connect(process.env.MONGO_URI)
+	.then(() => {
+		console.log('Mongo DB ulandi ...')
+	})
+	.catch(() => {
+		console.log('Error: db is not connected!')
+	})
+
+console.log('Dastur boshlanmoqda!');

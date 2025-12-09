@@ -1,5 +1,7 @@
 import { config } from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
+import onRegister from './handlers/onRegister.js'
+import onStart from './handlers/onStart.js'
 config()
 
 const token = process.env.BOT_TOKEN
@@ -11,11 +13,15 @@ bot.on('message', msg => {
 
 	switch (text) {
 		case '/start':
-			bot.sendMessage(chatId, 'Salom!')
+			onStart(msg)
 			break
+		case '/register':
+			onRegister(msg)
 		default:
 			break
 	}
 })
 
 console.log('Bot ishga tushdi')
+
+export default bot

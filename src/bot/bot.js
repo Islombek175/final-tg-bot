@@ -6,14 +6,11 @@ config()
 
 const token = process.env.BOT_TOKEN
 const bot = new TelegramBot(token, { polling: true })
-const CHANNEL_ID = '@test_channel_islombek'
+const CHANNEL_ID = '@group_IT101'
 
 const checkIfUserSubscribed = async chatId => {
 	try {
-		console.log('TRY++++++++++++')
-
 		const chatMember = await bot.getChatMember(CHANNEL_ID, chatId)
-		console.log('---------------------')
 		console.log(chatMember.status)
 
 		if (chatMember.status == 'left' || chatMember.status == 'kicked') {
@@ -22,7 +19,7 @@ const checkIfUserSubscribed = async chatId => {
 			return true
 		}
 	} catch {
-		console.log('CATCH--------------')
+		console.log('error: chatMember checking')
 	}
 }
 
@@ -31,30 +28,27 @@ bot.on('message', async msg => {
 	const text = msg.text
 	const firstName = msg.chat.first_name
 
-	const subscription = await checkIfUserSubscribed(chatId)
+	const user_subscribed = await checkIfUserSubscribed(chatId)
 
-	console.log(subscription)
+	console.log(user_subscribed)
 
-	// false -> kanalda yoq
-	// true -> kanalda bor
-
-	if (subscription == false) {
+	if (user_subscribed == false) {
 		return bot.sendMessage(
 			chatId,
-			`Hurmatli ${firstname}\n Siz botdan foydalanishingiz uchun oldin quyidagi kanalga obuna bolishingiz kerak... 👇`,
+			`Hurmatli ${firstName}, \nSiz botimizdan foydalanishingiz uchun oldin quyidagi kanalga obuna bo'lishing garak... 👇`,
 			{
 				reply_markup: {
 					inline_keyboard: [
 						[
 							{
-								text: '100x Academy Xiva',
-								url: `https://t.me/academy_100x_uz`,
+								text: `Our channel`,
+								url: 'https://t.me/group_IT101',
 							},
 						],
 						[
 							{
-								text: 'Obunani tekshirish ✅',
-								callback_data: `confirm_subscribtion`,
+								text: `Obunani tekshirish ✅`,
+								callback_data: 'confirm_subscribtion',
 							},
 						],
 					],
@@ -62,8 +56,6 @@ bot.on('message', async msg => {
 			}
 		)
 	}
-
-	console.log(subscription)
 
 	switch (text) {
 		case '/start':
@@ -76,6 +68,25 @@ bot.on('message', async msg => {
 	}
 })
 
-console.log('Bot ishga tushdi')
+bot.on('callback_query', async query => {
+	const msg = query.message
+	const chatId = msg.chat.id
+	const data = query.data
+	const queryId = query.id
+
+	if (data == 'confirm_subscribtion') {
+		console.log('TUGMA BOSILDI')
+		const user_subscribed = await checkIfUserSubscribed(chatId)
+
+		if (user_subscribed == false) {
+			return bot.answerCallbackQuery(queryId, {
+				text: "Siz hali obuna bo'lmadingiz... ❌",
+			})
+		} else {
+			bot.deleteMessage(chatId, msg.message_id)
+			return onStart(msg)
+		}
+	}
+})
 
 export default bot

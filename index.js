@@ -11,5 +11,3 @@ mongoose
 	.catch(() => {
 		console.log('Error: db is not connected!')
 	})
-
-console.log('Dastur boshlanmoqda!');

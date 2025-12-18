@@ -1,24 +1,28 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
-	telegramId: {
+	chatId: {
 		type: String,
-		require: true,
+		required: true,
 		unique: true,
 	},
 	firstName: {
 		type: String,
 	},
-	balance: {
-		type: Number,
-		default: 100,
+	userName: {
+		type: String,
+		default: null,
 	},
 	active: {
 		type: Boolean,
 		default: true,
 	},
+	balance: {
+		type: Number,
+		default: 1000,
+	},
 })
 
-const user = new mongoose('User', userSchema)
+const User = new mongoose.model('User', userSchema)
 
-export default user
+export default User

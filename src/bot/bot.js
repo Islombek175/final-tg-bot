@@ -2,6 +2,7 @@ import { config } from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
 import onRegister from './handlers/onRegister.js'
 import onStart from './handlers/onStart.js'
+import onUsers from './handlers/onUsers.js'
 config()
 
 const token = process.env.BOT_TOKEN
@@ -59,11 +60,16 @@ bot.on('message', async msg => {
 
 	switch (text) {
 		case '/start':
-			onStart(chatId, firstName)
+			onStart(msg)
 			break
 		case '/register':
-			onRegister(chatId)
+			onRegister(msg)
+			break
+		case '/users':
+			onUsers(chatId)
+			break
 		default:
+			bot.sendMessage(chatId, "Siz noto'g'ri amal kiritdingiz, botni ishga tushirish uchun /start ni bosing.")
 			break
 	}
 })

@@ -18,16 +18,10 @@ Bu bot orqali siz:
 Quyidagi menyudan kerakli bo'limni tanlang 👇`,
 		{
 			reply_markup: {
-				inline_keyboard: [
-					[
-						{ text: '📚 Kurslar', callback_data: 'courses' },
-						{ text: '✍️ Ro‘yxatdan o‘tish', callback_data: 'register' },
-					],
-					[
-						{ text: 'ℹ️ Markaz haqida', callback_data: 'about' },
-						{ text: '💬 Fikr bildirish', callback_data: 'report' },
-					],
-					[{ text: '❓ Yordam', callback_data: 'help' }],
+				keyboard: [
+					[{ text: '📚 Kurslar' }, { text: '✍️ Ro‘yxatdan o‘tish' }],
+					[{ text: 'ℹ️ Markaz haqida' }, { text: '💬 Fikr bildirish' }],
+					[{ text: '❓ Yordam' }],
 				],
 			},
 		}

@@ -1,7 +1,6 @@
 import bot from '../bot.js'
 
-const onRegister = msg => {
-	const chatId = msg.chat.id
+const onRegister = chatId => {
 	bot.sendMessage(chatId, "Ro'yxatdan o'tish.")
 }
 

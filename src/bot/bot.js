@@ -1,5 +1,6 @@
 import { config } from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
+import onCourses from './handlers/onCourses.js'
 import onRegister from './handlers/onRegister.js'
 import onStart from './handlers/onStart.js'
 import onUsers from './handlers/onUsers.js'
@@ -63,13 +64,19 @@ bot.on('message', async msg => {
 			onStart(msg)
 			break
 		case '/register':
-			onRegister(msg)
+			onRegister(chatId)
 			break
 		case '/users':
 			onUsers(chatId)
 			break
+		case '📚 Kurslar':
+			onCourses(chatId)
+			break
 		default:
-			bot.sendMessage(chatId, "Siz noto'g'ri amal kiritdingiz, botni ishga tushirish uchun /start ni bosing.")
+			bot.sendMessage(
+				chatId,
+				"Siz noto'g'ri amal kiritdingiz, botni ishga tushirish uchun /start ni bosing."
+			)
 			break
 	}
 })

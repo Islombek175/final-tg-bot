@@ -6,7 +6,11 @@ async function onUsers(chatId) {
 
 	const userSoni = await User.countDocuments()
 
-	bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userSoni}`)
+	if (chatId === 6480933576) {
+		bot.sendMessage(chatId, `Foydalanuvchilar soni: ${userSoni}`)
+	} else {
+		bot.sendMessage(chatId, `Faqat adminlar uchun.`)
+	}
 }
 
 export default onUsers
